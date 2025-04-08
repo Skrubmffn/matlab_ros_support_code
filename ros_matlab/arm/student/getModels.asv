@@ -14,5 +14,6 @@ function models = getModels(optns)
     res_req = rosmessage(r.get_models_client);
     
     % TODO: 03 Call client 
-    models = call(r.get_models_client, res_req);
+
+    call(r.get_models_client, res_req);
 end
