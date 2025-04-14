@@ -32,15 +32,16 @@ function [bboxes, scores, labels, numObjects, myImg, annotatedImage] = getLabele
     disp("Computing bounding boxes, scores, and labels...")
 
     %% According to strategy leverage different detectors...
-    pretrained = r.general_detector;
+    pretrained = load("./detectors/detector_gral_sim.mat");
     trainedYoloNet = pretrained.detector;
 
     %% TODO: Detect objects using yolo. Output bboxes, scores, labels. Threshold of 0.7
-    [bboxes,scores,labels] =    
+    [bboxes,scores,labels] =    detect(trainedYoloNet,myImg,Threshold=0.7);
+    numObjects = size(bboxes,1);
 
     %% TODO: Visualize the detected objects' bounding boxes by calling insertObjectAnnotation and save to annotatedImage
     disp("Drawing bounding boxes...")
-    annotatedImage = 
+    annotatedImage = insertObjectAnnotation(im2uint8(myImg), 'Rectangle', bboxes, string(labels)+":" +string(scores));
 
     % Display
     if optns{'debug'}
